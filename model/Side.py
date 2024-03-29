@@ -16,20 +16,20 @@ class Side:
         self.frame.pack(side=LEFT, padx=10, pady=10)
 
         self.label = Label(self.frame, text=self.title)
-        self.label.grid(row=0, columnspan=3)
+        self.label.grid(row=0, columnspan=3, sticky="NSEW")
 
         self.extra_entry = Entry(self.frame)
-        self.extra_entry.grid(row=1, columnspan=3)
+        self.extra_entry.grid(row=1, columnspan=3, sticky="NSEW")
 
         self.matrix = self.create_matrix()
 
         self.clear_button = Button(self.frame, text=f"Очистити {self.title.lower()}",
                                    command=lambda: self.clear_matrix_and_entry())
-        self.clear_button.grid(row=6, columnspan=3)
+        self.clear_button.grid(row=6, columnspan=3, sticky="NSEW")
 
         self.predefine_button = Button(self.frame, text=f"Вставити значення",
                                        command=lambda: self.setup_default())
-        self.predefine_button.grid(row=7, columnspan=3)
+        self.predefine_button.grid(row=7, columnspan=3, sticky="NSEW")
 
     def create_matrix(self):
         matrix = []
@@ -38,7 +38,7 @@ class Side:
             row = []
             for j in range(self.size):
                 entry = Entry(self.frame, width=5)
-                entry.grid(row=i + 2, column=j)
+                entry.grid(row=i + 2, column=j, sticky="NSEW")
                 row.append(entry)
             matrix.append(row)
         return matrix

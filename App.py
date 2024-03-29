@@ -12,7 +12,7 @@ class App:
         self.size = size
 
         matrix_container = Frame(window)
-        matrix_container.pack(side=TOP, fill=BOTH, expand=True)
+        matrix_container.pack(side=TOP, fill=Y, expand=True)
 
         self.matrix_x = Side_X(matrix_container, "X", self.size, [[1, 0], [0, 1]])
         self.matrix_alice = Side(matrix_container, "Alice", self.size, [[4, 3], [2, 1]], value_number=3)
