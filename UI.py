@@ -15,10 +15,10 @@ class Main:
 
         frame1, label1, matrix1 = create_example_matrix(matrix_container, "X", size, [[1, 0], [0, 1]])
 
-        frame2, label2, extra_entry2, matrix2 = create_labeled_matrix(matrix_container, "Alice", size, [[1, 2], [3, 4]],
+        frame2, label2, extra_entry2, matrix2 = create_labeled_matrix(matrix_container, "Alice", size, [[4, 3], [2, 1]],
                                                                       3)
 
-        frame3, label3, extra_entry3, matrix3 = create_labeled_matrix(matrix_container, "Bob", size, [[4, 3], [2, 1]],
+        frame3, label3, extra_entry3, matrix3 = create_labeled_matrix(matrix_container, "Bob", size, [[1, 2], [3, 4]],
                                                                       5)
 
         result_frame = Frame(window)
