@@ -30,10 +30,6 @@ def non_commutative_diffie_hellman(T, T_prime, X, a, b, field_size):
         field_size
     )
 
-    print(f"alice:{Alice_computation}")
-    print(f"bob:{Bob_computation}")
-    print(f"x:{X}")
-
     return Alice_computation, Bob_computation
 
 # Приклад ініціалізації матриць та параметрів

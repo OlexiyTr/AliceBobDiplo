@@ -24,10 +24,6 @@ def foo(matrix_alice, matrix_bob, X, a, b, field_size, result_frame):
     bob = ui_to_core(matrix_bob)
     x = ui_to_core(X)
 
-    print(f"alice:{alice}")
-    print(f"bob:{bob}")
-    print(f"x:{x}")
-
     matrix_alice_result = matrix_power_mod(
         np.dot(np.dot(bob, matrix_power_mod(x, int(b), field_size)), inverse_mod_matrix(alice, field_size)),
         a,
