@@ -56,3 +56,7 @@ def clear_matrix(matrix):
     for row in matrix:
         for entry in row:
             entry.delete(0, END)
+
+def clear_all(matrix1, matrix2):
+    clear_matrix(matrix1)
+    clear_matrix(matrix2)

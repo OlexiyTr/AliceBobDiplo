@@ -22,4 +22,8 @@ calculate_button = Button(window, text="Calculate",
                           command=lambda: calculate_matrices_sum(matrix2, matrix3, result_frame))
 calculate_button.pack(side=BOTTOM, fill=X)
 
+calculate_button = Button(window, text="Clear all",
+                          command=lambda: clear_all(matrix2, matrix3))
+calculate_button.pack(side=BOTTOM, fill=X)
+
 window.mainloop()
