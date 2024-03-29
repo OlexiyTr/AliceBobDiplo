@@ -17,7 +17,7 @@ def calculate_matrices_sum(matrix1, matrix2, result_frame):
                 row.append(0)
         result_matrix.append(row)
 
+    Label(result_frame, text="Result Matrix", font=("Arial", 16)).grid(row=0, columnspan=3)
     for i, row_values in enumerate(result_matrix):
         for j, value in enumerate(row_values):
-            result_label = Label(result_frame, text=f"{value:.2f}", width=5)
-            result_label.pack(side=LEFT)
+            Label(result_frame, text=f"{value:.2f}", width=5).grid(row=i+1, column=j)
