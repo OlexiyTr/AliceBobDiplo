@@ -6,9 +6,9 @@ def calculate_matrices_sum(matrix1, matrix2, result_frame):
         widget.destroy()
 
     result_matrix = []
-    for i in range(3):
+    for i in range(2):
         row = []
-        for j in range(3):
+        for j in range(2):
             try:
                 value1 = float(matrix1[i][j].get())
                 value2 = float(matrix2[i][j].get())
