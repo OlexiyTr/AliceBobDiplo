@@ -1,14 +1,15 @@
 from tkinter import *
 
 
-def calculate_matrices_sum(matrix1, matrix2, result_frame):
+#test
+def calculate_matrices_sum(matrix1, matrix2, result_frame, size):
     for widget in result_frame.winfo_children():
         widget.destroy()
 
     result_matrix = []
-    for i in range(len(matrix1)):
+    for i in range(size):
         row = []
-        for j in range(len(matrix1)):
+        for j in range(size):
             try:
                 value1 = float(matrix1[i][j].get())
                 value2 = float(matrix2[i][j].get())

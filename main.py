@@ -1,5 +1,5 @@
-import numpy as np
-import tkinter as tk
+from UI import Main
+
 
 def main():
 
@@ -7,4 +7,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    Main()
