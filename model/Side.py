@@ -27,11 +27,14 @@ class Side:
                                    command=lambda: self.clear_matrix_and_entry())
         self.clear_button.grid(row=6, columnspan=self.size, sticky="NSEW")
 
-        self.predefine_button = Button(self.frame, text=f"Вставити значення",command=lambda: self.setup_default())
+        self.predefine_button = Button(self.frame, text=f"Вставити",command=lambda: self.setup_default())
         self.predefine_button.grid(row=7, columnspan=self.size, sticky="NSEW")
 
+        self.predefine_button = Button(self.frame, text=f"Вставити приклад", command=lambda: self.setup_default())
+        self.predefine_button.grid(row=8, columnspan=self.size, sticky="NSEW")
+
         self.copy_button = Button(self.frame, text=f"Копіювати", command=lambda: self.copy_values())
-        self.copy_button.grid(row=8, columnspan=self.size, sticky="NSEW")
+        self.copy_button.grid(row=9, columnspan=self.size, sticky="NSEW")
 
     def copy_values(self):
         self.window.clipboard_clear()
@@ -85,3 +88,12 @@ class Side:
             for j in range(len(self.matrix)):
                 self.matrix[i][j].delete(0, END)
                 self.matrix[i][j].insert(0, str(self.value_matrix[i][j]))
+
+    def get_converted_as_np(self):
+        result_matrix = []
+        for i in range(len(self.matrix)):
+            row = []
+            for j in range(len(self.matrix)):
+                row.append(int(self.matrix[i][j].get()))
+            result_matrix.append(row)
+        return result_matrix
