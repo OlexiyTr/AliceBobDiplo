@@ -1,15 +1,15 @@
 from tkinter import *
-from ast import literal_eval
 
 
 class Side:
-    def __init__(self, window, title, size, value_matrix, value_number):
+    def __init__(self, window, title, size, value_matrix, value_number, with_entry):
         super().__init__()
         self.window = window
         self.title = title
         self.size = size
         self.value_matrix = value_matrix
         self.value_number = value_number
+        self.with_entry = with_entry
         self.setup()
 
     def setup(self):
@@ -20,8 +20,9 @@ class Side:
         self.label = Label(self.frame, text=self.title)
         self.label.grid(row=0, columnspan=self.size)
 
-        self.extra_entry = Entry(self.frame)
-        self.extra_entry.grid(row=1, columnspan=self.size, sticky="NSEW")
+        if (self.with_entry):
+            self.extra_entry = Entry(self.frame)
+            self.extra_entry.grid(row=1, columnspan=self.size, sticky="NSEW")
 
         self.matrix = self.create_matrix()
         self.setup_buttons_frame()
@@ -31,18 +32,18 @@ class Side:
         self.buttons_frame = Frame(self.frame)
         self.buttons_frame.grid(row=6, columnspan=self.size, sticky="NSEW")
 
-        self.buffer_button = Button(self.buttons_frame, text=f"Вставити з буферу", command=lambda: self.setup_default())
+        self.buffer_button = Button(self.buttons_frame, text=f"Вставити з буферу", command=lambda: self.setup_from_buffer())
         self.buffer_button.grid(row=0, columnspan=self.size, sticky="NSEW")
 
         self.example_button = Button(self.buttons_frame, text=f"Вставити приклад", command=lambda: self.setup_default())
         self.example_button.grid(row=1, columnspan=self.size, sticky="NSEW")
 
-        self.buffer_example_label = Label(self.buttons_frame, text=f"Приклад:{self.example}")
+        self.buffer_example_label = Label(self.buttons_frame, text=f"Формат прикладу:'{self.example}'")
         self.buffer_example_label.grid(row=2, columnspan=self.size, sticky="NSEW")
 
     def setup_methods_frame(self):
         self.methods_frame = Frame(self.frame)
-        self.methods_frame.grid(row=7, columnspan=self.size, sticky="NSEW", pady = 5)
+        self.methods_frame.grid(row=7, columnspan=self.size, sticky="NSEW", pady=5)
 
         self.clear_button = Button(self.methods_frame, text="Очистити",
                                    command=lambda: self.clear_matrix_and_entry())
@@ -55,10 +56,18 @@ class Side:
         self.methods_frame.columnconfigure(1, weight=1)
 
     def setup_example_label(self):
-        if (self.size == 2):
-            self.example = [[1, 2], [3, 4]]
-        else:
-            self.example = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        match self.size:
+            case 2:
+                self.example = [[1, 2], [3, 4]]
+            case 3:
+                self.example = [[1, 2, 3],
+                                [4, 5, 6],
+                                [7, 8, 9]]
+            case 4:
+                self.example = [[1, 2, 3, 4],
+                                [5, 6, 7, 8],
+                                [9, 10, 11, 12],
+                                [13, 14, 15, 16]]
 
     def copy_values(self):
         self.window.clipboard_clear()
@@ -72,7 +81,11 @@ class Side:
                 row.append(int(self.matrix[i][j].get()))
             matrix.append(row)
 
-        return f"{self.extra_entry.get()} {matrix}"
+        if self.with_entry:
+            result = f"{self.extra_entry.get()} {matrix}"
+        else:
+            result = f"{matrix}"
+        return result
 
     def create_matrix(self):
         matrix = []
@@ -92,26 +105,40 @@ class Side:
         self.value_matrix = value_matrix
         self.setup()
 
-    def clear_matrix_and_entry(self):
-        self.extra_entry.delete(0, END)
-        self.clear_matrix()
-
     def clear_matrix(self):
         for row in self.matrix:
             for entry in row:
                 entry.delete(0, END)
 
     def clear_matrix_and_entry(self):
-        self.extra_entry.delete(0, END)
+        if (self.with_entry):
+            self.extra_entry.delete(0, END)
         self.clear_matrix()
 
     def setup_default(self):
-        self.extra_entry.delete(0, END)
-        self.extra_entry.insert(0, str(self.value_number))
+        if self.with_entry:
+            self.extra_entry.delete(0, END)
+            self.extra_entry.insert(0, str(self.value_number))
+
         for i in range(len(self.matrix)):
             for j in range(len(self.matrix)):
                 self.matrix[i][j].delete(0, END)
                 self.matrix[i][j].insert(0, str(self.value_matrix[i][j]))
+
+    def setup_from_buffer(self):
+        matrix = self.parse_matrix(self.window.clipboard_get())
+        print(matrix)
+        for i in range(len(matrix)):
+            for j in range(len(matrix)):
+                self.matrix[i][j].delete(0, END)
+                self.matrix[i][j].insert(0, str(matrix[i][j]))
+
+    def parse_matrix(self, matrix_string):
+        rows = matrix_string.strip("[]").split("], [")
+        matrix = [list(map(int, row.split(", "))) for row in rows]
+        return matrix
+
+
 
     def get_converted_as_np(self):
         result_matrix = []
