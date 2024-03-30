@@ -1,4 +1,5 @@
 from tkinter import *
+from ast import literal_eval
 
 
 class Side:
@@ -12,6 +13,7 @@ class Side:
         self.setup()
 
     def setup(self):
+        self.setup_example_label()
         self.frame = Frame(self.window)
         self.frame.pack(side=LEFT, padx=10, pady=10)
 
@@ -22,24 +24,45 @@ class Side:
         self.extra_entry.grid(row=1, columnspan=self.size, sticky="NSEW")
 
         self.matrix = self.create_matrix()
+        self.setup_buttons_frame()
+        self.setup_methods_frame()
 
-        self.clear_button = Button(self.frame, text="Очистити",
+    def setup_buttons_frame(self):
+        self.buttons_frame = Frame(self.frame)
+        self.buttons_frame.grid(row=6, columnspan=self.size, sticky="NSEW")
+
+        self.buffer_button = Button(self.buttons_frame, text=f"Вставити з буферу", command=lambda: self.setup_default())
+        self.buffer_button.grid(row=0, columnspan=self.size, sticky="NSEW")
+
+        self.example_button = Button(self.buttons_frame, text=f"Вставити приклад", command=lambda: self.setup_default())
+        self.example_button.grid(row=1, columnspan=self.size, sticky="NSEW")
+
+        self.buffer_example_label = Label(self.buttons_frame, text=f"Приклад:{self.example}")
+        self.buffer_example_label.grid(row=2, columnspan=self.size, sticky="NSEW")
+
+    def setup_methods_frame(self):
+        self.methods_frame = Frame(self.frame)
+        self.methods_frame.grid(row=7, columnspan=self.size, sticky="NSEW", pady = 5)
+
+        self.clear_button = Button(self.methods_frame, text="Очистити",
                                    command=lambda: self.clear_matrix_and_entry())
-        self.clear_button.grid(row=6, columnspan=self.size, sticky="NSEW")
+        self.clear_button.grid(row=0, column=0, sticky="NSEW")
 
-        self.predefine_button = Button(self.frame, text=f"Вставити",command=lambda: self.setup_default())
-        self.predefine_button.grid(row=7, columnspan=self.size, sticky="NSEW")
+        self.copy_button = Button(self.methods_frame, text=f"Копіювати", command=lambda: self.copy_values())
+        self.copy_button.grid(row=0, column=1, sticky="NSEW")
 
-        self.predefine_button = Button(self.frame, text=f"Вставити приклад", command=lambda: self.setup_default())
-        self.predefine_button.grid(row=8, columnspan=self.size, sticky="NSEW")
+        self.methods_frame.columnconfigure(0, weight=1)
+        self.methods_frame.columnconfigure(1, weight=1)
 
-        self.copy_button = Button(self.frame, text=f"Копіювати", command=lambda: self.copy_values())
-        self.copy_button.grid(row=9, columnspan=self.size, sticky="NSEW")
+    def setup_example_label(self):
+        if (self.size == 2):
+            self.example = [[1, 2], [3, 4]]
+        else:
+            self.example = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
     def copy_values(self):
         self.window.clipboard_clear()
         self.window.clipboard_append(self.convert_to_string())
-
 
     def convert_to_string(self):
         matrix = []
@@ -63,9 +86,10 @@ class Side:
             matrix.append(row)
         return matrix
 
-    def update_size(self, new_size):
+    def update_size(self, new_size, value_matrix):
         self.frame.destroy()
         self.size = new_size
+        self.value_matrix = value_matrix
         self.setup()
 
     def clear_matrix_and_entry(self):

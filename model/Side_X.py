@@ -27,9 +27,10 @@ class Side_X:
                                        command=lambda: self.setup_default())
         self.predefine_button.grid(row=7, columnspan=self.size, sticky="NSEW")
 
-    def update_size(self, new_size):
+    def update_size(self, new_size, value_matrix):
         self.frame.destroy()
         self.size = new_size
+        self.value_matrix = value_matrix
         self.setup()
 
     def create_matrix(self):
