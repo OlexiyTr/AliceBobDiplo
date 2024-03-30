@@ -23,13 +23,30 @@ class Side:
 
         self.matrix = self.create_matrix()
 
-        self.clear_button = Button(self.frame, text=f"Очистити {self.title.lower()}",
+        self.clear_button = Button(self.frame, text="Очистити",
                                    command=lambda: self.clear_matrix_and_entry())
-        self.clear_button.grid(row=6, columnspan=self.size)
+        self.clear_button.grid(row=6, columnspan=self.size, sticky="NSEW")
 
-        self.predefine_button = Button(self.frame, text=f"Вставити значення",
-                                       command=lambda: self.setup_default())
-        self.predefine_button.grid(row=7, columnspan=self.size)
+        self.predefine_button = Button(self.frame, text=f"Вставити значення",command=lambda: self.setup_default())
+        self.predefine_button.grid(row=7, columnspan=self.size, sticky="NSEW")
+
+        self.copy_button = Button(self.frame, text=f"Копіювати", command=lambda: self.copy_values())
+        self.copy_button.grid(row=8, columnspan=self.size, sticky="NSEW")
+
+    def copy_values(self):
+        self.window.clipboard_clear()
+        self.window.clipboard_append(self.convert_to_string())
+
+
+    def convert_to_string(self):
+        matrix = []
+        for i in range(len(self.matrix)):
+            row = []
+            for j in range(len(self.matrix)):
+                row.append(int(self.matrix[i][j].get()))
+            matrix.append(row)
+
+        return f"{self.extra_entry.get()} {matrix}"
 
     def create_matrix(self):
         matrix = []
