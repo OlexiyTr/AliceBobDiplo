@@ -46,7 +46,7 @@ class SideUi:
 
     def setup_methods_frame(self):
         self.methods_frame = Frame(self.frame)
-        self.methods_frame.grid(row=7, columnspan=self.size, sticky="NSEW", pady=5)
+        self.methods_frame.grid(row=7, columnspan=self.size, sticky="NSEW")
 
         self.clear_button = Button(self.methods_frame, text="Очистити",
                                    command=lambda: self.clear_matrix_and_entry())

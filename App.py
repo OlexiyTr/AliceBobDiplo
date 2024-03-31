@@ -25,11 +25,16 @@ class App:
         window = Tk()
         self.window = window
         self.setup_main_tab()
-        window.mainloop()
+        self.window.mainloop()
 
     def setup_main_tab(self):
         self.matrix_size = IntVar(value=self.size)
         self.size = self.matrix_size.get()
+        self.setup_matrix_frame()
+        self.setup_result_frame()
+        self.setup_buttons()
+
+    def setup_matrix_frame(self):
         matrix_container = Frame(self.window)
         matrix_container.pack(side=TOP, fill=Y, expand=True)
 
@@ -54,18 +59,17 @@ class App:
                                  value_number=3,
                                  with_entry=True)
 
+    def setup_result_frame(self):
         self.result_frame = Frame(self.window)
         self.result_frame.pack(side=TOP, fill=Y, expand=True)
 
-        self.clear_all_button = Button(self.window, text="Очистити все",
-                                       command=lambda: self.clear_all())
-        self.clear_all_button.pack(side=BOTTOM, fill=X)
+    def setup_buttons(self):
+        Button(self.window, text="Очистити все",
+               command=lambda: self.clear_all()).pack(side=BOTTOM, fill=X)
 
-        self.calculate_button = Button(self.window, text="Обрахувати", command=lambda: self.calculate())
-        self.calculate_button.pack(side=BOTTOM, fill=X)
+        Button(self.window, text="Обрахувати", command=lambda: self.calculate()).pack(side=BOTTOM, fill=X)
 
-        self.field_size_label = Label(self.window, text="Скінчене поле над :")
-        self.field_size_label.pack(side=LEFT)
+        Label(self.window, text="Скінчене поле над :").pack(side=LEFT)
 
         self.field_size_entry = Entry(self.window)
         self.field_size_entry.pack(side=LEFT, fill=Y)
@@ -91,7 +95,9 @@ class App:
         self.matrix_alice.clear_matrix_and_entry()
         self.matrix_bob.clear_matrix_and_entry()
         self.matrix_x.clear_matrix()
-        self.result_frame.destroy()
+        for widget in self.result_frame.winfo_children():
+            widget.destroy()
+        self.field_size_entry.delete(0, END)
 
     def calculate(self):
         for widget in self.result_frame.winfo_children():

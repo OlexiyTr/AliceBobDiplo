@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter.font import Font, BOLD
 
 from algorithm.CalculateAlogithm import CalculateAlgorithm, CalculateResult
 
@@ -12,11 +13,13 @@ class CalculateUi:
         results = algroithm.calculate()
         alice_result = results[0]
         bob_result = results[1]
-        self.show_column(result_frame=result_frame, title="Аліса", calculated_result=alice_result, column_position=0)
-        self.show_column(result_frame=result_frame, title="Боб", calculated_result=bob_result, column_position=1)
+        self.show_column(result_frame=result_frame, title="Alice", calculated_result=alice_result, column_position=0)
+        self.show_column(result_frame=result_frame, title="Bob", calculated_result=bob_result, column_position=1)
 
     def show_column(self, result_frame, title, calculated_result: CalculateResult, column_position):
-        Label(result_frame, text=title).grid(row=0, column=column_position, sticky="NSEW")
+        Label(result_frame, text=title, font=Font(result_frame, size=15, weight=BOLD)).grid(row=0,
+                                                                                            column=column_position,
+                                                                                            sticky="NSEW")
         self.column_item(
             frame=result_frame,
             title="Обернена матриця",
