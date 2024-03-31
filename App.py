@@ -71,11 +71,18 @@ class App:
         self.clear_all_button = Button(self.tab_main, text="Почистити все",
                                        command=lambda: self.clear_all())
         self.clear_all_button.pack(side=BOTTOM, fill=X)
+
+        self.field_size_label = Label(self.tab_main, text="Скінчене поле над :")
+        self.field_size_label.pack(side=LEFT)
+
+        self.field_size_entry = Entry(self.tab_main)
+        self.field_size_entry.pack(side=LEFT)
+
         self.create_size_controls()
 
     def create_size_controls(self):
         size_frame = Frame(self.tab_main)
-        size_frame.pack(side=BOTTOM)
+        size_frame.pack(side=LEFT)
 
         for size in self.defaults.keys():
             rb = Radiobutton(size_frame, text=f"{size}x{size}", variable=self.matrix_size, value=size,
@@ -104,5 +111,5 @@ class App:
             matrix_bob=self.matrix_bob,
             power_alice=int(self.matrix_alice.extra_entry.get()),
             power_bob=int(self.matrix_bob.extra_entry.get()),
-            field_value=8,
+            field_value=int(self.field_size_entry.get()),
         )
