@@ -2,20 +2,19 @@ from tkinter import *
 from tkinter.ttk import Notebook
 
 from algorithm.Calculate import Calculate
-from model.Side import Side
+from model.SideUi import SideUi
 
 
 class App:
     def __init__(self, size):
         super().__init__()
-
         self.size = size
         self.calcualte = Calculate()
-        # self.history = []
+
         self.defaults = {
-            "2": [[[1, 0], [0, 1]],
-                  [[1, 2], [3, 4]],
-                  [[3, 2], [5, 4]]],
+            "2": [[[4, 0], [0, 1]],
+                  [[2, 0], [0, 3]],
+                  [[5, 0], [0, 7]]],
             "3": [[[1, 0, 3], [1, 0, 1], [1, 2, 1]],
                   [[0, 7, 4], [1, 0, 1], [1, 5, 5]],
                   [[1, 4, 3], [1, 6, 1], [2, 2, 1]]],
@@ -33,9 +32,7 @@ class App:
     def setup_tabs(self, window):
         self.tabControl = Notebook(window)
         self.tab_main = Frame(self.tabControl)
-        # self.tab_history = Frame(self.tabControl)
         self.tabControl.add(self.tab_main, text='Main')
-        # self.tabControl.add(self.tab_history, text='History')
         self.tabControl.pack(expand=True, fill=X)
 
     def setup_main_tab(self):
@@ -44,26 +41,26 @@ class App:
         matrix_container = Frame(self.tab_main)
         matrix_container.pack(side=TOP, fill=Y, expand=True)
 
-        self.matrix_x = Side(window=matrix_container,
-                             title="X",
-                             size=self.size,
-                             value_matrix=self.defaults[str(self.matrix_size.get())][0],
-                             value_number=0,
-                             with_entry=False)
+        self.matrix_x = SideUi(window=matrix_container,
+                               title="X",
+                               size=self.size,
+                               value_matrix=self.defaults[str(self.matrix_size.get())][0],
+                               value_number=0,
+                               with_entry=False)
 
-        self.matrix_alice = Side(window=matrix_container,
-                                 title="Alice",
+        self.matrix_alice = SideUi(window=matrix_container,
+                                   title="Alice",
+                                   size=self.size,
+                                   value_matrix=self.defaults[str(self.matrix_size.get())][1],
+                                   value_number=2,
+                                   with_entry=True)
+
+        self.matrix_bob = SideUi(window=matrix_container,
+                                 title="Bob",
                                  size=self.size,
-                                 value_matrix=self.defaults[str(self.matrix_size.get())][1],
+                                 value_matrix=self.defaults[str(self.matrix_size.get())][2],
                                  value_number=3,
                                  with_entry=True)
-
-        self.matrix_bob = Side(window=matrix_container,
-                               title="Bob",
-                               size=self.size,
-                               value_matrix=self.defaults[str(self.matrix_size.get())][2],
-                               value_number=5,
-                               with_entry=True)
 
         self.result_frame = Frame(self.tab_main)
         self.result_frame.pack(side=TOP, fill=BOTH, expand=True, padx=(5, 0), pady=(5, 0))
@@ -100,5 +97,12 @@ class App:
         for widget in self.result_frame.winfo_children():
             widget.destroy()
 
-        self.calcualte.invoke(self.matrix_alice, self.matrix_bob, self.result_frame)
-        self.calcualte.foo(self.matrix_x, self.matrix_alice, self.matrix_bob)
+        self.calcualte.algo(
+            result_frame=self.result_frame,
+            matrix_x=self.matrix_x,
+            matrix_alice=self.matrix_alice,
+            matrix_bob=self.matrix_bob,
+            power_alice=int(self.matrix_alice.extra_entry.get()),
+            power_bob=int(self.matrix_bob.extra_entry.get()),
+            field_value=8,
+        )

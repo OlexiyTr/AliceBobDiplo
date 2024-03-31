@@ -1,7 +1,7 @@
 from tkinter import *
 
 
-class Side:
+class SideUi:
     def __init__(self, window, title, size, value_matrix, value_number, with_entry):
         super().__init__()
         self.window = window
@@ -13,7 +13,6 @@ class Side:
         self.setup()
 
     def setup(self):
-        self.setup_example_label()
         self.frame = Frame(self.window)
         self.frame.pack(side=LEFT, padx=10, pady=10)
 
@@ -32,13 +31,14 @@ class Side:
         self.buttons_frame = Frame(self.frame)
         self.buttons_frame.grid(row=6, columnspan=self.size, sticky="NSEW")
 
-        self.buffer_button = Button(self.buttons_frame, text=f"Вставити з буферу", command=lambda: self.setup_from_buffer())
+        self.buffer_button = Button(self.buttons_frame, text=f"Вставити з буферу",
+                                    command=lambda: self.setup_from_buffer())
         self.buffer_button.grid(row=0, columnspan=self.size, sticky="NSEW")
 
         self.example_button = Button(self.buttons_frame, text=f"Вставити приклад", command=lambda: self.setup_default())
         self.example_button.grid(row=1, columnspan=self.size, sticky="NSEW")
 
-        self.buffer_example_label = Label(self.buttons_frame, text=f"Формат прикладу:'{self.example}'")
+        self.buffer_example_label = Label(self.buttons_frame, text=f"Формат прикладу:'{self.value_matrix}'")
         self.buffer_example_label.grid(row=2, columnspan=self.size, sticky="NSEW")
 
     def setup_methods_frame(self):
@@ -54,20 +54,6 @@ class Side:
 
         self.methods_frame.columnconfigure(0, weight=1)
         self.methods_frame.columnconfigure(1, weight=1)
-
-    def setup_example_label(self):
-        match self.size:
-            case 2:
-                self.example = [[1, 2], [3, 4]]
-            case 3:
-                self.example = [[1, 2, 3],
-                                [4, 5, 6],
-                                [7, 8, 9]]
-            case 4:
-                self.example = [[1, 2, 3, 4],
-                                [5, 6, 7, 8],
-                                [9, 10, 11, 12],
-                                [13, 14, 15, 16]]
 
     def copy_values(self):
         self.window.clipboard_clear()
@@ -137,8 +123,6 @@ class Side:
         rows = matrix_string.strip("[]").split("], [")
         matrix = [list(map(int, row.split(", "))) for row in rows]
         return matrix
-
-
 
     def get_converted_as_np(self):
         result_matrix = []
