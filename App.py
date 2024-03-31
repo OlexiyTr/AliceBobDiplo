@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter.ttk import Notebook
 
-from algorithm.Calculate import Calculate
+from algorithm.CalculateUi import CalculateUi
 from model.SideUi import SideUi
 
 
@@ -9,7 +9,7 @@ class App:
     def __init__(self, size):
         super().__init__()
         self.size = size
-        self.calcualte = Calculate()
+        self.calcualte = CalculateUi()
 
         self.defaults = {
             "2": [[[4, 0], [0, 1]],
@@ -43,21 +43,21 @@ class App:
 
         self.matrix_x = SideUi(window=matrix_container,
                                title="X",
-                               size=self.size,
+                               size=self.matrix_size.get(),
                                value_matrix=self.defaults[str(self.matrix_size.get())][0],
                                value_number=0,
                                with_entry=False)
 
         self.matrix_alice = SideUi(window=matrix_container,
                                    title="Alice",
-                                   size=self.size,
+                                   size=self.matrix_size.get(),
                                    value_matrix=self.defaults[str(self.matrix_size.get())][1],
                                    value_number=2,
                                    with_entry=True)
 
         self.matrix_bob = SideUi(window=matrix_container,
                                  title="Bob",
-                                 size=self.size,
+                                 size=self.matrix_size.get(),
                                  value_matrix=self.defaults[str(self.matrix_size.get())][2],
                                  value_number=3,
                                  with_entry=True)
@@ -104,7 +104,7 @@ class App:
         for widget in self.result_frame.winfo_children():
             widget.destroy()
 
-        self.calcualte.algo(
+        self.calcualte.show(
             result_frame=self.result_frame,
             matrix_x=self.matrix_x,
             matrix_alice=self.matrix_alice,
