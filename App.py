@@ -24,21 +24,14 @@ class App:
         }
 
         window = Tk()
-
-        self.setup_tabs(window)
+        self.window = window
         self.setup_main_tab()
         window.mainloop()
-
-    def setup_tabs(self, window):
-        self.tabControl = Notebook(window)
-        self.tab_main = Frame(self.tabControl)
-        self.tabControl.add(self.tab_main, text='Main')
-        self.tabControl.pack(expand=True, fill=X)
 
     def setup_main_tab(self):
         self.matrix_size = IntVar(value=self.size)
         self.size = self.matrix_size.get()
-        matrix_container = Frame(self.tab_main)
+        matrix_container = Frame(self.window)
         matrix_container.pack(side=TOP, fill=Y, expand=True)
 
         self.matrix_x = SideUi(window=matrix_container,
@@ -62,26 +55,26 @@ class App:
                                  value_number=3,
                                  with_entry=True)
 
-        self.result_frame = Frame(self.tab_main)
-        self.result_frame.pack(side=TOP, fill=BOTH, expand=True, padx=(5, 0), pady=(5, 0))
+        self.result_frame = Frame(self.window)
+        self.result_frame.pack(side=TOP, fill=Y, expand=True)
 
-        self.calculate_button = Button(self.tab_main, text="Обрахувати", command=lambda: self.calculate())
-        self.calculate_button.pack(side=BOTTOM, fill=X)
-
-        self.clear_all_button = Button(self.tab_main, text="Почистити все",
+        self.clear_all_button = Button(self.window, text="Очистити все",
                                        command=lambda: self.clear_all())
         self.clear_all_button.pack(side=BOTTOM, fill=X)
 
-        self.field_size_label = Label(self.tab_main, text="Скінчене поле над :")
+        self.calculate_button = Button(self.window, text="Обрахувати", command=lambda: self.calculate())
+        self.calculate_button.pack(side=BOTTOM, fill=X)
+
+        self.field_size_label = Label(self.window, text="Скінчене поле над :")
         self.field_size_label.pack(side=LEFT)
 
-        self.field_size_entry = Entry(self.tab_main)
-        self.field_size_entry.pack(side=LEFT)
+        self.field_size_entry = Entry(self.window)
+        self.field_size_entry.pack(side=LEFT, fill=Y)
 
         self.create_size_controls()
 
     def create_size_controls(self):
-        size_frame = Frame(self.tab_main)
+        size_frame = Frame(self.window)
         size_frame.pack(side=LEFT)
 
         for size in self.defaults.keys():

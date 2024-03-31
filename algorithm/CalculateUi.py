@@ -27,7 +27,7 @@ class CalculateUi:
 
         self.column_item(
             frame=result_frame,
-            title=f"Матриця Х піднесена до числа {title}",
+            title=f"Матриця Х піднесена до числа",
             matrix=calculated_result.x_by_power_side_value,
             row_position=2,
             column_position=column_position,
@@ -44,7 +44,7 @@ class CalculateUi:
         self.column_item(
             frame=result_frame,
             title="Піднесена отримана матриця до свого числа",
-            matrix=calculated_result.another_matrix_powered_by_side_value,
+            matrix=calculated_result.another_matrix_powered_by_side_value[0],
             row_position=4,
             column_position=column_position,
         )
