@@ -20,8 +20,7 @@ class CalculateUi:
             frame=result_frame,
             title=f"Обернена матриця {title}",
             matrix=calculated_result.side_matrix_inverted,
-            label_row_position=0,
-            matrix_row_position=1,
+            row_position=0,
             column_position=column_position,
         )
 
@@ -29,8 +28,7 @@ class CalculateUi:
             frame=result_frame,
             title=f"Матриця Х піднесена до числа {title}",
             matrix=calculated_result.x_by_power_side_value,
-            label_row_position=2,
-            matrix_row_position=3,
+            row_position=1,
             column_position=column_position,
         )
 
@@ -38,20 +36,15 @@ class CalculateUi:
             frame=result_frame,
             title=f"{title} обрахував T*X^a*(T^(-1)) і надсилає співрозмовнику",
             matrix=calculated_result.side_matrix_computed,
-            label_row_position=4,
-            matrix_row_position=5,
+            row_position=2,
             column_position=column_position,
         )
-
-        print(calculated_result.side_matrix_computed)
-        print(calculated_result.another_matrix_powered_by_side_value)
 
         self.column_item(
             frame=result_frame,
             title=f"{title} піднесла отриману матрицю до свого числа",
             matrix=calculated_result.another_matrix_powered_by_side_value,
-            label_row_position=6,
-            matrix_row_position=7,
+            row_position=3,
             column_position=column_position,
         )
 
@@ -59,19 +52,18 @@ class CalculateUi:
             frame=result_frame,
             title=f"{title} спрягає результат зі своїм елементом T_a",
             matrix=calculated_result.side_matrix_conjugated,
-            label_row_position=8,
-            matrix_row_position=9,
+            row_position=4,
             column_position=column_position,
         )
 
-    def column_item(self, frame, title, matrix, label_row_position, matrix_row_position, column_position):
-        Label(frame, text=title).grid(row=label_row_position,
-                                      column=column_position,
-                                      sticky="NSEW")
+    def column_item(self, frame, title, matrix, row_position, column_position):
+        column_item_frame = Frame(frame)
+        column_item_frame.grid(row=row_position, column=column_position)
+        Label(column_item_frame, text=title).grid(row=0, column=column_position, sticky="NSEW")
         self.show_matrix(
             matrix=matrix,
-            frame=frame,
-            row_position=matrix_row_position,
+            frame=column_item_frame,
+            row_position=1,
             column_position=column_position)
 
     def show_matrix(self, matrix, frame, row_position, column_position):
