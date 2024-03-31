@@ -33,13 +33,16 @@ class SideUi:
 
         self.buffer_button = Button(self.buttons_frame, text=f"Вставити з буферу",
                                     command=lambda: self.setup_from_buffer())
-        self.buffer_button.grid(row=0, columnspan=self.size, sticky="NSEW")
+        self.buffer_button.grid(row=0, column=0, sticky="NSEW")
 
         self.example_button = Button(self.buttons_frame, text=f"Вставити приклад", command=lambda: self.setup_default())
-        self.example_button.grid(row=1, columnspan=self.size, sticky="NSEW")
+        self.example_button.grid(row=0, column=1, sticky="NSEW")
 
-        self.buffer_example_label = Label(self.buttons_frame, text=f"Формат прикладу:'{self.value_matrix}'")
-        self.buffer_example_label.grid(row=2, columnspan=self.size, sticky="NSEW")
+        self.buffer_example_label = Label(self.buttons_frame, text=f"Формат прикладу буферу:'{self.value_matrix}'")
+        self.buffer_example_label.grid(row=1, columnspan=self.size, sticky="NSEW")
+
+        self.buttons_frame.columnconfigure(0, weight=1)
+        self.buttons_frame.columnconfigure(1, weight=1)
 
     def setup_methods_frame(self):
         self.methods_frame = Frame(self.frame)
@@ -75,7 +78,6 @@ class SideUi:
 
     def create_matrix(self):
         matrix = []
-
         for i in range(self.size):
             row = []
             for j in range(self.size):

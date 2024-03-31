@@ -1,5 +1,4 @@
 from tkinter import *
-from tkinter.ttk import Notebook
 
 from algorithm.CalculateUi import CalculateUi
 from model.SideUi import SideUi
@@ -92,6 +91,7 @@ class App:
         self.matrix_alice.clear_matrix_and_entry()
         self.matrix_bob.clear_matrix_and_entry()
         self.matrix_x.clear_matrix()
+        self.result_frame.destroy()
 
     def calculate(self):
         for widget in self.result_frame.winfo_children():
