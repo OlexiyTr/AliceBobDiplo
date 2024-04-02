@@ -11,9 +11,9 @@ class App:
         self.calcualte = CalculateUi()
 
         self.defaults = {
-            "2": [[[4, 0], [0, 1]],
-                  [[2, 0], [0, 3]],
-                  [[5, 0], [0, 7]]],
+            "2": [[[3, 13], [12, 11]],
+                  [[11, 2], [5, 13]],
+                  [[12, 2], [5, 14]]],
             "3": [[[1, 0, 3], [1, 0, 1], [1, 2, 1]],
                   [[0, 7, 4], [1, 0, 1], [1, 5, 5]],
                   [[1, 4, 3], [1, 6, 1], [2, 2, 1]]],
@@ -41,23 +41,17 @@ class App:
         self.matrix_x = SideUi(window=matrix_container,
                                title="X",
                                size=self.matrix_size.get(),
-                               value_matrix=self.defaults[str(self.matrix_size.get())][0],
-                               value_number=0,
-                               with_entry=False)
+                               value_matrix=self.defaults[str(self.matrix_size.get())][0])
 
         self.matrix_alice = SideUi(window=matrix_container,
                                    title="Alice",
                                    size=self.matrix_size.get(),
-                                   value_matrix=self.defaults[str(self.matrix_size.get())][1],
-                                   value_number=2,
-                                   with_entry=True)
+                                   value_matrix=self.defaults[str(self.matrix_size.get())][1])
 
         self.matrix_bob = SideUi(window=matrix_container,
                                  title="Bob",
                                  size=self.matrix_size.get(),
-                                 value_matrix=self.defaults[str(self.matrix_size.get())][2],
-                                 value_number=3,
-                                 with_entry=True)
+                                 value_matrix=self.defaults[str(self.matrix_size.get())][2])
 
     def setup_result_frame(self):
         self.result_frame = Frame(self.window)
@@ -108,7 +102,5 @@ class App:
             matrix_x=self.matrix_x,
             matrix_alice=self.matrix_alice,
             matrix_bob=self.matrix_bob,
-            power_alice=int(self.matrix_alice.extra_entry.get()),
-            power_bob=int(self.matrix_bob.extra_entry.get()),
             field_value=int(self.field_size_entry.get()),
         )

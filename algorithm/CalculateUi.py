@@ -8,9 +8,9 @@ class CalculateUi:
     def __init__(self):
         super().__init__()
 
-    def show(self, result_frame, matrix_alice, matrix_bob, matrix_x, power_alice, power_bob, field_value):
-        algroithm = CalculateAlgorithm(matrix_alice, matrix_bob, matrix_x, power_alice, power_bob, field_value)
-        results = algroithm.calculate()
+    def show(self, result_frame, matrix_alice, matrix_bob, matrix_x, field_value):
+        algroithm = CalculateAlgorithm(matrix_alice, matrix_bob, matrix_x, field_value)
+        results = algroithm.foo()
         alice_result = results[0]
         bob_result = results[1]
         self.show_column(result_frame=result_frame, title="Alice", calculated_result=alice_result, column_position=0)
@@ -23,40 +23,24 @@ class CalculateUi:
         self.column_item(
             frame=result_frame,
             title="Обернена матриця",
-            matrix=calculated_result.side_matrix_inverted,
+            matrix=calculated_result.inverted,
             row_position=1,
             column_position=column_position,
         )
 
         self.column_item(
             frame=result_frame,
-            title=f"Матриця Х піднесена до числа",
-            matrix=calculated_result.x_by_power_side_value,
+            title="Обрахована матриця T^(-1)*X*T",
+            matrix=calculated_result.computed,
             row_position=2,
             column_position=column_position,
         )
 
         self.column_item(
             frame=result_frame,
-            title="Обрахована T*X^a*(T^(-1)), яку надішлють співрозмовнику",
-            matrix=calculated_result.side_matrix_computed,
-            row_position=3,
-            column_position=column_position,
-        )
-
-        self.column_item(
-            frame=result_frame,
-            title="Піднесена отримана матриця до свого числа",
-            matrix=calculated_result.another_matrix_powered_by_side_value[0],
-            row_position=4,
-            column_position=column_position,
-        )
-
-        self.column_item(
-            frame=result_frame,
             title="Спряжений результат зі своєю матрицею",
-            matrix=calculated_result.side_matrix_conjugated,
-            row_position=5,
+            matrix=calculated_result.conjugated,
+            row_position=3,
             column_position=column_position,
         )
 

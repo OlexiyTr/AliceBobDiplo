@@ -2,14 +2,12 @@ from tkinter import *
 
 
 class SideUi:
-    def __init__(self, window, title, size, value_matrix, value_number, with_entry):
+    def __init__(self, window, title, size, value_matrix):
         super().__init__()
         self.window = window
         self.title = title
         self.size = size
         self.value_matrix = value_matrix
-        self.value_number = value_number
-        self.with_entry = with_entry
         self.setup()
 
     def setup(self):
@@ -18,10 +16,6 @@ class SideUi:
 
         self.label = Label(self.frame, text=self.title)
         self.label.grid(row=0, columnspan=self.size)
-
-        if (self.with_entry):
-            self.extra_entry = Entry(self.frame)
-            self.extra_entry.grid(row=1, columnspan=self.size, sticky="NSEW")
 
         self.matrix = self.create_matrix()
         self.setup_buttons_frame()
@@ -69,12 +63,7 @@ class SideUi:
             for j in range(len(self.matrix)):
                 row.append(int(self.matrix[i][j].get()))
             matrix.append(row)
-
-        if self.with_entry:
-            result = f"{self.extra_entry.get()} {matrix}"
-        else:
-            result = f"{matrix}"
-        return result
+        return f"{matrix}"
 
     def create_matrix(self):
         matrix = []
@@ -99,15 +88,9 @@ class SideUi:
                 entry.delete(0, END)
 
     def clear_matrix_and_entry(self):
-        if (self.with_entry):
-            self.extra_entry.delete(0, END)
         self.clear_matrix()
 
     def setup_default(self):
-        if self.with_entry:
-            self.extra_entry.delete(0, END)
-            self.extra_entry.insert(0, str(self.value_number))
-
         for i in range(len(self.matrix)):
             for j in range(len(self.matrix)):
                 self.matrix[i][j].delete(0, END)
