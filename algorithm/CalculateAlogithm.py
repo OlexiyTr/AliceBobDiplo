@@ -1,19 +1,21 @@
 import numpy as np
 
+from model.Side import Side
 
-class CalculateAlgorithm:
 
-    def __init__(self, matrix_alice, matrix_bob, matrix_x, field_value):
+class CalculatedAlgorithm:
+
+    def __init__(self, matrix_alice: Side, matrix_bob: Side, matrix_x: Side, field_value):
         super().__init__()
         self.matrix_alice = matrix_alice
         self.matrix_bob = matrix_bob
         self.matrix_x = matrix_x
         self.field_value = field_value
 
-    def foo(self):
-        alice_matrix = np.array(self.matrix_alice.get_converted_as_np())
-        bob_matrix = np.array(self.matrix_bob.get_converted_as_np())
-        x_matrix = np.array(self.matrix_x.get_converted_as_np())
+    def get_results(self):
+        alice_matrix = np.array(self.matrix_alice.get_matrix_array())
+        bob_matrix = np.array(self.matrix_bob.get_matrix_array())
+        x_matrix = np.array(self.matrix_x.get_matrix_array())
 
         alice_inverted = self.__inverted_matrix(alice_matrix)
 
@@ -27,13 +29,13 @@ class CalculateAlgorithm:
 
         bob_conjugated = np.dot(np.dot(bob_inverted, alice_computed), bob_matrix) % self.field_value
 
-        alice_result = CalculateResult(
+        alice_result = CalculatedResult(
             inverted=self.custom_round(alice_inverted),
             computed=self.custom_round(alice_computed),
             conjugated=self.custom_round(alice_conjugated)
         )
 
-        bob_result = CalculateResult(
+        bob_result = CalculatedResult(
             inverted=self.custom_round(bob_inverted),
             computed=self.custom_round(bob_computed),
             conjugated=self.custom_round(bob_conjugated)
@@ -49,9 +51,16 @@ class CalculateAlgorithm:
     def __inverted_matrix(self, matrix):
         determinant = int(np.linalg.det(matrix) % self.field_value)
         inverse = int(self.__mod_inverse(determinant, self.field_value))
-        adj = self.__matrix_adjugate(matrix)
-        new_matrix = np.mod(inverse * adj, self.field_value)
-        return new_matrix
+        adjugate = self.__matrix_adjugate(matrix)
+        result_matrix = np.mod(inverse * adjugate, self.field_value)
+        return result_matrix
+
+    def __mod_inverse(self, item, modulo):
+        gcd, x, y = self.__extended_gcd(item, modulo)
+        if gcd != 1:
+            raise Exception('Мультиплікативне обернене не існує')
+        else:
+            return x % modulo
 
     def __extended_gcd(self, a, b):
         if a == 0:
@@ -59,18 +68,6 @@ class CalculateAlgorithm:
         else:
             gcd, x, y = self.__extended_gcd(b % a, a)
             return gcd, y - (b // a) * x, x
-
-    def __mod_inverse(self, a, m):
-        gcd, x, y = self.__extended_gcd(a, m)
-        if gcd != 1:
-            raise Exception('Мультиплікативне обернене не існує')
-        else:
-            return x % m
-
-    def __calc_cofactor(self, matrix, row, col):
-        minor = np.delete(np.delete(matrix, row, axis=0), col, axis=1)
-        cofactor = ((-1) ** (row + col)) * np.linalg.det(minor)
-        return cofactor
 
     def __matrix_adjugate(self, matrix):
         if matrix.size == 1:
@@ -83,8 +80,13 @@ class CalculateAlgorithm:
                 adjugate_matrix[row, col] = self.__calc_cofactor(matrix, row, col)
         return adjugate_matrix.T
 
+    def __calc_cofactor(self, matrix, row, col):
+        minor = np.delete(np.delete(matrix, row, axis=0), col, axis=1)
+        cofactor = ((-1) ** (row + col)) * np.linalg.det(minor)
+        return cofactor
 
-class CalculateResult:
+
+class CalculatedResult:
     def __init__(self, inverted, computed, conjugated):
         self.inverted = inverted
         self.computed = computed

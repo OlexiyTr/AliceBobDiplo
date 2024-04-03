@@ -1,7 +1,7 @@
 from tkinter import *
 
 from algorithm.CalculateUi import CalculateUi
-from model.SideUi import SideUi
+from model.Side import Side
 
 
 class App:
@@ -38,20 +38,20 @@ class App:
         matrix_container = Frame(self.window)
         matrix_container.pack(side=TOP, fill=Y, expand=True)
 
-        self.matrix_x = SideUi(window=matrix_container,
-                               title="X",
-                               size=self.matrix_size.get(),
-                               value_matrix=self.defaults[str(self.matrix_size.get())][0])
+        self.matrix_x = Side(window=matrix_container,
+                             title="X",
+                             size=self.matrix_size.get(),
+                             value_matrix=self.defaults[str(self.matrix_size.get())][0])
 
-        self.matrix_alice = SideUi(window=matrix_container,
-                                   title="Alice",
-                                   size=self.matrix_size.get(),
-                                   value_matrix=self.defaults[str(self.matrix_size.get())][1])
-
-        self.matrix_bob = SideUi(window=matrix_container,
-                                 title="Bob",
+        self.matrix_alice = Side(window=matrix_container,
+                                 title="Alice",
                                  size=self.matrix_size.get(),
-                                 value_matrix=self.defaults[str(self.matrix_size.get())][2])
+                                 value_matrix=self.defaults[str(self.matrix_size.get())][1])
+
+        self.matrix_bob = Side(window=matrix_container,
+                               title="Bob",
+                               size=self.matrix_size.get(),
+                               value_matrix=self.defaults[str(self.matrix_size.get())][2])
 
     def setup_result_frame(self):
         self.result_frame = Frame(self.window)

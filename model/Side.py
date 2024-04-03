@@ -1,7 +1,7 @@
 from tkinter import *
 
 
-class SideUi:
+class Side:
     def __init__(self, window, title, size, value_matrix):
         super().__init__()
         self.window = window
@@ -109,7 +109,7 @@ class SideUi:
         matrix = [list(map(int, row.split(", "))) for row in rows]
         return matrix
 
-    def get_converted_as_np(self):
+    def get_matrix_array(self):
         result_matrix = []
         for i in range(len(self.matrix)):
             row = []
