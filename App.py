@@ -5,9 +5,9 @@ from model.Side import Side
 
 
 class App:
-    def __init__(self, size):
+    def __init__(self):
         super().__init__()
-        self.size = size
+        self.size = 2
         self.calcualte = CalculateUi()
 
         self.defaults = {
